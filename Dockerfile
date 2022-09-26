@@ -17,6 +17,5 @@ RUN dnf install -y qemu libguestfs-tools
 COPY install_wasmedge.guestfish /assets/install_wasmedge.guestfish
 WORKDIR /work
 
-CMD curl -L https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20220906.3.2/x86_64/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz |unxz > fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2 \
-    && LIBGUESTFS_BACKEND=direct guestfish -a fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2 -m /dev/sda4 -f /assets/install_wasmedge.guestfish \
-    && chmod 666 fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2
+COPY entrypoint.sh /
+CMD /entrypoint.sh https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20220906.3.2/x86_64/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz

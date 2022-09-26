@@ -1,0 +1,38 @@
+name: Extend CoreOS image
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:        
+      - '*' 
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
+jobs:
+  build-amd64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build installer immage
+      run: docker build . -t $(echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | awk '{print tolower($0)}'):image-installer-0.1.0
+    - name: Extend the base qcow2 image amd64
+      run: docker run -v $(pwd):/work $(echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | awk '{print tolower($0)}'):image-installer-0.1.0 /entrypoint.sh https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20220906.3.2/x86_64/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz
+    - name: Compress image
+      run: sudo xz *.qcow2 
+    - uses: actions/upload-artifact@v3
+      with:
+        path: "*.qcow2.xz"
+  release:
+    needs: [build-amd64]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v3
+    - uses: softprops/action-gh-release@v1
+      name: Release
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: "artifact/*.qcow2.xz"

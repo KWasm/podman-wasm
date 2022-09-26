@@ -1,7 +1,5 @@
-upload /assets/crun /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/usr/bin/crun
-mkdir /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/usr/lib/wasmedge
-upload /assets/libwasmedge.so /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/usr/lib/wasmedge/libwasmedge.so.0.0.0
-ln-s /usr/lib/wasmedge/libwasmedge.so.0.0.0 /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/usr/lib/wasmedge/libwasmedge.so.0
-ln-s /usr/lib/wasmedge/libwasmedge.so.0.0.0 /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/usr/lib/wasmedge/libwasmedge.so
-write-append /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/etc/ld.so.conf "\n/usr/lib/wasmedge/"
-command "/ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0/usr/sbin/ldconfig -r /ostree/deploy/fedora-coreos/deploy/a8b4dda3092f20335cd3270db131f782edf5cad8b11b927283b3da2af42463e6.0"
+upload /assets/crun /ostree/deploy/fedora-coreos/deploy/<OS_ROOT>/usr/bin/crun
+upload /assets/libwasmedge.so /ostree/deploy/fedora-coreos/deploy/<OS_ROOT>/usr/lib/libwasmedge.so.0.0.0
+ln-s /usr/lib/libwasmedge.so.0.0.0 /ostree/deploy/fedora-coreos/deploy/<OS_ROOT>/usr/lib/libwasmedge.so.0
+ln-s /usr/lib/libwasmedge.so.0.0.0 /ostree/deploy/fedora-coreos/deploy/<OS_ROOT>/usr/lib/libwasmedge.so
+command "/ostree/deploy/fedora-coreos/deploy/<OS_ROOT>/sbin/ldconfig -r /ostree/deploy/fedora-coreos/deploy/<OS_ROOT>"
