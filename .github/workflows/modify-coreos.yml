@@ -1,0 +1,29 @@
+name: Extend CoreOS image
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:        
+      - '*' 
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build kwasm/podman-wasm-installer
+      run: docker build . -t kwasm/podman-wasm-installer
+    - name: Extend the base qcow2 image
+      run: docker run -v $(pwd):/work kwasm/podman-wasm-installer
+    - name: Compress image
+      run: sudo xz *.qcow2 
+    - uses: actions/upload-artifact@v3
+      with:
+        path: "*.qcow2.xz"
+    - uses: softprops/action-gh-release@v1
+      name: Release
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: "*.qcow2.xz"
