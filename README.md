@@ -6,24 +6,36 @@ Podman machine creates a CoreOS QEMU VM to run podman. CoreOS has podman already
 
 Crun uses annotations to distinguish between standard linux and wasm-containers. The annotations are `module.wasm.image/variant=compat` or `run.oci.handler=wasm` when running a wasm-container with podman it always need an annotation like this `--annotation run.oci.handler=wasm` (see example).
 
-## How to use
+## Quickstart
 ### Install Podman
 If you haven't already done you need to install [podman](https://podman.io/). To do so, you can use the [Podman Installation Instructions](https://podman.io/getting-started/installation).
-### Use patched image on Intel CPU
+
+### Docker machine on MacOS / Windows
+#### Use patched image on Intel CPU 
 ```bash
 podman machine init --image-path https://github.com/KWasm/podman-wasm/releases/download/36.20220906.3.2/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz
 podman machine start
 ```
-### Use patched image on ARM CPU (M1/M2)
+#### Use patched image on ARM CPU (M1/M2)
 ```bash
 podman machine init --image-path https://github.com/KWasm/podman-wasm/releases/download/36.20220906.3.2/fedora-coreos-36.20220906.3.2-qemu.aarch64.qcow2.xz
 podman machine start
 ```
+
+### Podman on Linux
+If you are using podman with `crun`, which is the default configuration, you only need to replace crun with a version that has WasmEdge built in. To do that you just need to compile `crun` from source with wasmedge enabled.
+```bash
+./autogen.sh
+./configure --with-wasmedge
+make
+# replace crun (be careful, you may want to do a bakup first)
+mv crun $(which crun)
+```
+For more information on how to build crun have a look at the [containers/crun](https://github.com/containers/crun) repository.
 ### Test the installation
 ```bash
-podman run --rm --annotation module.wasm.image/variant=compat-smart docker.io/wasmedge/example-wasi:latest  /wasi_example_main.wasm 50000000
+podman run --rm --annotation module.wasm.image/variant=compat-smart docker.io/wasmedge/example-wasi:latest /wasi_example_main.wasm 50000000
 ```
-
 
 ## How to build
 Prerequisits:
