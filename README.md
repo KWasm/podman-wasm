@@ -13,12 +13,12 @@ If you haven't already done you need to install [podman](https://podman.io/). To
 ### Docker machine on MacOS / Windows
 #### Use patched image on Intel CPU 
 ```bash
-podman machine init --image-path https://github.com/KWasm/podman-wasm/releases/download/36.20220906.3.2/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz
+podman machine init --image-path https://github.com/KWasm/podman-wasm/releases/download/36.20221001.3.0/fedora-coreos-36.20221001.3.0-qemu.x86_64.qcow2.xz
 podman machine start
 ```
 #### Use patched image on ARM CPU (M1/M2)
 ```bash
-podman machine init --image-path https://github.com/KWasm/podman-wasm/releases/download/36.20220906.3.2/fedora-coreos-36.20220906.3.2-qemu.aarch64.qcow2.xz
+podman machine init --image-path https://github.com/KWasm/podman-wasm/releases/download/36.20221001.3.0/fedora-coreos-36.20221001.3.0-qemu.aarch64.qcow2.xz
 podman machine start
 ```
 
@@ -42,7 +42,7 @@ Prerequisits:
 You'll need [podman](https://podman.io/) and a URL to the qcow2 image you want to modify. The image URL can be found [on the fedora website](https://getfedora.org/en/coreos/download?tab=metal_virtualized). Make sure, that you are yusing a QEMU image (*.qcow2.xz) and that it matches your host architecture (e.g. aarch64 or x86_64).
 
 ```bash
-export IMAGE_URL=https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20220906.3.2/x86_64/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz
+export IMAGE_URL=https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20221001.3.0/x86_64/fedora-coreos-36.20221001.3.0-qemu.x86_64.qcow2.xz
 export IMAGE_FILENAME=$(basename -s .xz $IMAGE_URL)
 
 # create new instaler image

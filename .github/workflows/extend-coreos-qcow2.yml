@@ -17,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Build installer immage
+    - name: Build installer image
       run: docker build . -t $(echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | awk '{print tolower($0)}'):image-installer-0.1.0
     - name: Extend the base qcow2 image amd64
-      run: docker run -v $(pwd):/work $(echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | awk '{print tolower($0)}'):image-installer-0.1.0 /entrypoint.sh https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20220906.3.2/x86_64/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz
+      run: docker run -v $(pwd):/work $(echo ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} | awk '{print tolower($0)}'):image-installer-0.1.0 /entrypoint.sh https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20221001.3.0/x86_64/fedora-coreos-36.20221001.3.0-qemu.x86_64.qcow2.xz
     - name: Compress image
       run: sudo xz *.qcow2 
     - uses: actions/upload-artifact@v3

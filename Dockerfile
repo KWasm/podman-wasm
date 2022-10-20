@@ -18,4 +18,4 @@ COPY install_wasmedge.guestfish /assets/install_wasmedge.guestfish
 WORKDIR /work
 
 COPY entrypoint.sh /
-CMD /entrypoint.sh https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20220906.3.2/x86_64/fedora-coreos-36.20220906.3.2-qemu.x86_64.qcow2.xz
+CMD /entrypoint.sh https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/36.20221001.3.0/x86_64/fedora-coreos-36.20221001.3.0-qemu.x86_64.qcow2.xz
